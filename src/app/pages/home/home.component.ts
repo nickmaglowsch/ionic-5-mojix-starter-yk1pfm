@@ -31,6 +31,7 @@ export class HomeComponent implements OnChanges, AfterViewInit {
   set category(value) {
     this._category = value;
     this.media = value ? 'movie' : 'music';
+    this.songList = this.api.searchSongs(this.term, this.media);
   }
 
   ngOnChanges(changes: SimpleChanges): void {}
