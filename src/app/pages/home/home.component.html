@@ -3,7 +3,7 @@
     <ion-title>Mojix Music App</ion-title>
     <div slot="end">
       <ion-label>Music/Movie</ion-label>
-      <ion-toggle></ion-toggle>
+      <ion-toggle (click)="category = !category"></ion-toggle>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -15,9 +15,21 @@
   ></ion-searchbar>
   <ion-list>
     <app-song
-      *ngFor="let song of (songList | async)?.results; let i = index"
+      *ngFor="
+        let song of (songList | async)?.results;
+        let i = index;
+        trackBy: trackByFn
+      "
       [currentSong]="song"
+      [index]="i + 1"
     ></app-song>
   </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 <ion-footer> </ion-footer>

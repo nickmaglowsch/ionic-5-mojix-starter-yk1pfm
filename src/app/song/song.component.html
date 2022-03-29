@@ -1,23 +1,35 @@
-<ion-item *ngIf="currentView == 'list'" (click)="changeView('card')">
+<ion-item
+  [ngClass]="isPrime() ? 'prime-list' : 'not-prime-list'"
+  *ngIf="currentView == 'list'"
+  (click)="changeView('card')"
+>
   <ion-avatar slot="start">
     <img src="{{ currentSong.artworkUrl60 }}" />
   </ion-avatar>
   <ion-label>
     <h2>{{ currentSong.trackName }}</h2>
     <h3>{{ currentSong.artistName }}</h3>
-    <p>{{ currentSong.image }}</p>
   </ion-label>
+  <!-- <ion-label slot="end"> </ion-label> -->
+  <div slot="end">
+    <b slot="end">{{ currentSong.trackPrice }}</b> {{ currentSong.currency }}
+  </div>
 </ion-item>
 
-<ion-card *ngIf="currentView == 'card'" (click)="changeView('list')">
+<ion-card
+  [ngClass]="isPrime() ? 'prime-card' : 'not-prime-card'"
+  *ngIf="currentView == 'card'"
+  (click)="changeView('list')"
+>
   <ion-card-header>
     <img [src]="currentSong.artworkUrl100" />
-    <ion-card-title class="white">{{ currentSong.artistName }}</ion-card-title>
-    <ion-card-subtitle class="white">{{
-      currentSong.trackName
-    }}</ion-card-subtitle>
+    <ion-card-title>{{ currentSong.artistName }}</ion-card-title>
+    <ion-card-subtitle>{{ currentSong.trackName }}</ion-card-subtitle>
   </ion-card-header>
-  <ion-card-content class="white">
-    {{ currentSong.trackPrice | currency: 'USD' }}
+  <ion-card-content>
+    {{ currentSong.trackTimeMillis }} <br />
+    Release: {{ currentSong.releaseDate | date: 'medium' }}<br />
+    <b>{{ currentSong.trackPrice }} </b>
+    {{ currentSong.currency }}
   </ion-card-content>
 </ion-card>

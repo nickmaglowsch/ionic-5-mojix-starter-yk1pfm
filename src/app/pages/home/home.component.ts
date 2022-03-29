@@ -6,17 +6,32 @@ import {
 } from '@angular/core';
 import { ApiService } from '../../api/api.service';
 import { SongResponse, SongModel } from '../../song/song.model';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnChanges, AfterViewInit {
-  songList: Observable<SongResponse>;
-  category: boolean;
-  term = 'Shakira';
-  media = 'music'; // Or movie
+  currentPage = new BehaviorSubject<number>(50);
+  songList: Observable<SongResponse> = this.currentPage.pipe(
+    switchMap((page) => {
+      console.log(page);
+      return this.api.searchSongs(this.term, this.media, page);
+    })
+  );
+  _category: boolean;
+  term = '';
+  media: 'movie' | 'music' = 'music'; // Or movie
+  get category() {
+    return this._category;
+  }
+
+  set category(value) {
+    this._category = value;
+    this.media = value ? 'movie' : 'music';
+  }
 
   ngOnChanges(changes: SimpleChanges): void {}
   constructor(public api: ApiService) {}
@@ -32,4 +47,12 @@ export class HomeComponent implements OnChanges, AfterViewInit {
     }
   }
   ngAfterViewInit() {}
+
+  loadData(event) {
+    this.currentPage.next(this.currentPage.value + 50);
+  }
+
+  trackByFn(index: number, element: any) {
+    return index;
+  }
 }

@@ -1,0 +1,31 @@
+.prime-list {
+  background-color: #ecf0f1;
+  --background: #2980b9;
+}
+.not-prime-list {
+  background-color: #ecf0f1;
+  --background: #eef3f3;
+}
+
+.prime-card {
+  background-color: #2980b9;
+}
+.not-prime-card {
+  background-color: #eef3f3;
+}
+
+.small {
+  ion-item {
+    --min-height: 100px;
+    --border-radius: 25px;
+    margin: 10px auto;
+  }
+}
+
+.big {
+  ion-item {
+    --min-height: 200px;
+    --border-radius: 25px;
+    margin: 10px auto;
+  }
+}
