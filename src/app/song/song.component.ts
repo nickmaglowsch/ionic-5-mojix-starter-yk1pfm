@@ -8,7 +8,9 @@ import { SongModel } from './song.model';
 })
 export class SongComponent implements OnInit {
   @Input() currentSong: SongModel;
+  @Input() index: number;
   currentView: 'list' | 'card' = 'list';
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -17,11 +19,11 @@ export class SongComponent implements OnInit {
     this.currentView = view;
   }
 
-  isPrime(n: number) {
-    if (n <= 1) return false;
+  isPrime() {
+    if (this.index <= 1) return false;
 
-    for (let i = 2; i < n; i++) {
-      if (n % i === 0) return false;
+    for (let i = 2; i < this.index; i++) {
+      if (this.index % i === 0) return false;
     }
 
     return true;
